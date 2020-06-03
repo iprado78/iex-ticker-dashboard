@@ -1,3 +1,13 @@
+
+Doing to it for real, streaming data
+
+Not in free tier - 
+
+https://cloud.iexapis.com/stable/search/aa/?token=pk_63509e5b43384ab08845be28759fb5ea
+
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
