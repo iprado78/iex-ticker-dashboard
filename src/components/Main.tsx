@@ -1,13 +1,12 @@
 import React from 'react';
+import { CoreData } from '../types';
 
-/**
- * Take date, symbol as props
- */
-export const Main = () => {
-  // get historical
-  // get intraday
-  // get financials
-  // get raw stats
+interface MainProps {
+  coreData: CoreData
+}
+
+export function Main({ coreData }: MainProps) {
+  console.log(coreData)
   return (
     <main>
       <div>Summary stats row</div>

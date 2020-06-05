@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Typography, makeStyles } from '@material-ui/core';
-// import { getSymbols } from '../services/IexClient';
 
 export interface HeaderProps {
   children: ReactNode;
