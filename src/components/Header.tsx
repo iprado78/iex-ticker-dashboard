@@ -23,7 +23,7 @@ export const Header = ({ children }: HeaderProps) => {
     <AppBar position="static" color="transparent">
       <Toolbar className={classes.root}>
         <Typography variant="h4" component="h1" className={classes.h4}>
-          Stock Ticker
+          Investors Exchange Stock View
         </Typography>
         {children}
       </Toolbar>

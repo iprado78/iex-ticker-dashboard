@@ -1,15 +1,22 @@
 import React from 'react';
-import { CoreData } from '../types';
+import { StockData } from '../types';
 
 interface MainProps {
-  coreData: CoreData
+  coreData: StockData
 }
 
 export function Main({ coreData }: MainProps) {
-  console.log(coreData)
   return (
     <main>
-      <div>Summary stats row</div>
+      <div>
+        <div>
+          High
+        </div>
+        <div>
+          Low
+        </div>
+
+      </div>
       <div>
         <div>Chart 1</div>
         <div>Chart 2</div>

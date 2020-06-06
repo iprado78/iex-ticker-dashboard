@@ -1,16 +1,14 @@
-import { CoreDataKey } from "../constants";
+import { StockDataKey } from "../constants";
+import { StockType } from ".";
 
 export interface IexSymbol {
   "symbol": string;
   "name": string;
   "date": string;
-  "type": string;
-  "iexId": string;
+  "exchange": string;
+  "type": StockType;
   "region": string;
   "currency": string;
-  "isEnabled": boolean;
-  "figi": string;
-  "cik": string;
 }
 
 export interface IexIntradayPrice {
@@ -105,15 +103,15 @@ export type HistoricalPricesPathBuilder = BasePathBuilder<HistoricalPathBuilderO
 export type IntradayPricesPathBuilder = BasePathBuilder<IntradayPathBuilderOptions>
 export type SummaryStatsPathBuilder = BasePathBuilder<SummaryStatsPathBuilderOptions>
 
-export type IexResponseBody<T extends CoreDataKey> = T extends CoreDataKey.symbols ? IexSymbol[] :
-  T extends CoreDataKey.historicalPrices ? IexHistoricalPrice[] :
-  T extends CoreDataKey.intradayPrices ? IexIntradayPrice[] :
-  T extends CoreDataKey.summaryStats ? IexKeyStats :
+export type IexResponseBody<T extends StockDataKey> = T extends StockDataKey.symbols ? IexSymbol[] :
+  T extends StockDataKey.historicalPrices ? IexHistoricalPrice[] :
+  T extends StockDataKey.intradayPrices ? IexIntradayPrice[] :
+  T extends StockDataKey.summaryStats ? IexKeyStats :
   never;
 
-export interface IexReqOptions<T extends CoreDataKey> {
+export interface IexReqOptions<T extends StockDataKey> {
   category: T,
   path: string
 }
 
-export type CacheValidator<T extends CoreDataKey> = (responseBody: IexResponseBody<T>) => boolean
+export type CacheValidator<T extends StockDataKey> = (responseBody: IexResponseBody<T>) => boolean

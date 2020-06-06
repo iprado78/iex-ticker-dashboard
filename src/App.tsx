@@ -1,32 +1,32 @@
-import React, { useReducer, useEffect, Reducer } from 'react';
+import React, { useReducer, useEffect, Reducer, useMemo } from 'react';
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from './theme';
 import { Header, Main, Sidebar, SelectTicker } from './components';
-import { coreDataReducer, CORE_DATA_DEFAULT_STATE, uiStateReducer, UI_DEFAULT_STATE } from './reducers';
-import { CoreData, UiState, CoreDataAction, UiStateAction } from './types';
-import { updateCoreData, updateHistoricalData } from './functions';
+import { stockDataReducer, STOCK_DATA_DEFAULT_STATE, uiStateReducer, UI_DEFAULT_STATE, refDataReducer, REF_DATA_DEFAULT_STATE } from './reducers';
+import { StockData, UiState, StockDataAction, UiStateAction, RefData, RefDataAction } from './types';
+import { hydrateStockData, hydrateRefData, activeTickerAction, symbolsToOptions } from './functions';
+import { DEFAULT_OPTION } from './constants';
 
 
 function App() {
-  const [{ activeTicker, timeRange }, dispatchUiState] = useReducer<Reducer<UiState, UiStateAction>>(uiStateReducer, UI_DEFAULT_STATE);
-  const [coreData, dispatchCoreData] = useReducer<Reducer<CoreData, CoreDataAction>>(coreDataReducer, CORE_DATA_DEFAULT_STATE);
+  const [uiState, dispatchUiState] = useReducer<Reducer<UiState, UiStateAction>>(uiStateReducer, UI_DEFAULT_STATE);
+  const [refData, dispatchRefData] = useReducer<Reducer<RefData, RefDataAction>>(refDataReducer, REF_DATA_DEFAULT_STATE)
+  const [stockData, dispatchStockData] = useReducer<Reducer<StockData, StockDataAction>>(stockDataReducer, STOCK_DATA_DEFAULT_STATE);
 
   useEffect(() => {
-    updateCoreData({ ticker: activeTicker, timeRange, dispatch: dispatchCoreData })
-    /* eslint-disable react-hooks/exhaustive-deps */
-  }, [activeTicker])
+    hydrateStockData({ uiState, dispatch: dispatchStockData });
+    hydrateRefData({ uiState, dispatch: dispatchRefData })
+  }, [uiState])
 
-  useEffect(() => {
-    updateHistoricalData({ ticker: activeTicker, timeRange, dispatch: dispatchCoreData })
-    /* eslint-disable react-hooks/exhaustive-deps */
-  }, [timeRange])
+  const symbolOptions = useMemo(() => symbolsToOptions(refData.symbols), [refData.symbols])
+  const selectedSymbolOption = useMemo(() => symbolOptions.find(symbol => symbol.value === uiState.activeTicker) || DEFAULT_OPTION, [uiState.activeTicker])
 
   return (
     <ThemeProvider theme={theme}>
       <Header>
-        <SelectTicker updateUiState={dispatchUiState} />
+        <SelectTicker selectedSymbolOption={selectedSymbolOption} dispatch={dispatchUiState} action={activeTickerAction} symbolOptions={symbolOptions} />
       </Header>
-      <Main coreData={coreData} />
+      <Main coreData={stockData} />
       <Sidebar />
     </ThemeProvider>
   );

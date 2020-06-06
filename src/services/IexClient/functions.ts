@@ -1,6 +1,6 @@
 import { IexSymbol, IexReqOptions, IntradayPricesPathBuilder, SymbolsPathBuilder, HistoricalPricesPathBuilder, SummaryStatsPathBuilder, IexResponseBody, IexHistoricalPrice, IexIntradayPrice, CacheValidator } from "../../types";
 import { buildUrl, lastCalendarDay, last15Minutes } from "../../functions";
-import { CoreDataKey } from "../../constants";
+import { StockDataKey } from "../../constants";
 
 export const API_KEY = "pk_63509e5b43384ab08845be28759fb5ea"
 export const API_BASE_URL = "https://cloud.iexapis.com/stable"
@@ -14,7 +14,7 @@ export const symbolsCacheValid = ([{ date }]: IexSymbol[]) => lastCalendarDay(da
 export const historicalCacheValid = ([{ date }]: IexHistoricalPrice[]) => lastCalendarDay(date)
 export const intradayCacheValid = ([{ date, minute }]: IexIntradayPrice[]) => last15Minutes(`${date} ${minute}`)
 
-export async function iexRequest<T extends CoreDataKey, Q extends IexResponseBody<T>>(reqOptions: IexReqOptions<T>, cacheValidator?: CacheValidator<T>) {
+export async function iexRequest<T extends StockDataKey, Q extends IexResponseBody<T>>(reqOptions: IexReqOptions<T>, cacheValidator?: CacheValidator<T>) {
   const request = new Request(buildUrl(API_BASE_URL, reqOptions.path, { token: API_KEY }));
   let cache: Cache | undefined;
   if (cacheValidator) {

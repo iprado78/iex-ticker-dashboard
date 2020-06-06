@@ -1,12 +1,12 @@
 
 import { IexSymbol, IexHistoricalPrice, IexIntradayPrice, IexKeyStats } from "../../types";
-import { CoreDataKey } from "../../constants";
+import { StockDataKey } from "../../constants";
 import { iexRequest, symbolsPath, symbolsCacheValid, historicalPricesPath, historicalCacheValid, intradayCacheValid, intradayPath, summaryStatsPath } from "./functions";
 
 // https://iexcloud.io/docs/api/#symbols
 export async function getSymbols() {
-  return iexRequest<CoreDataKey.symbols, IexSymbol[]>({
-    category: CoreDataKey.symbols,
+  return iexRequest<StockDataKey.symbols, IexSymbol[]>({
+    category: StockDataKey.symbols,
     path: symbolsPath({}),
   },
     symbolsCacheValid
@@ -15,8 +15,8 @@ export async function getSymbols() {
 
 // https://iexcloud.io/docs/api/#historical-prices
 export async function getHistoricalPrices(symbol: string, range: string) {
-  return iexRequest<CoreDataKey.historicalPrices, IexHistoricalPrice[]>({
-    category: CoreDataKey.historicalPrices,
+  return iexRequest<StockDataKey.historicalPrices, IexHistoricalPrice[]>({
+    category: StockDataKey.historicalPrices,
     path: historicalPricesPath({ symbol, range }),
   },
     historicalCacheValid
@@ -25,8 +25,8 @@ export async function getHistoricalPrices(symbol: string, range: string) {
 
 // https://iexcloud.io/docs/api/#intraday-prices
 export async function getIntradayPrices(symbol: string) {
-  return iexRequest<CoreDataKey.intradayPrices, IexIntradayPrice[]>({
-    category: CoreDataKey.intradayPrices,
+  return iexRequest<StockDataKey.intradayPrices, IexIntradayPrice[]>({
+    category: StockDataKey.intradayPrices,
     path: intradayPath({ symbol }),
   },
     intradayCacheValid
@@ -35,8 +35,8 @@ export async function getIntradayPrices(symbol: string) {
 
 // https://iexcloud.io/docs/api/#key-stats
 export async function getSummaryStats(symbol: string) {
-  return iexRequest<CoreDataKey.summaryStats, IexKeyStats>({
-    category: CoreDataKey.summaryStats,
+  return iexRequest<StockDataKey.summaryStats, IexKeyStats>({
+    category: StockDataKey.summaryStats,
     path: summaryStatsPath({ symbol }),
   })
 }
