@@ -1,5 +1,5 @@
 
-import { IexSymbol, IexHistoricalPrice, IexIntradayPrice, IexKeyStats } from "../../types";
+import { IexSymbol, Price, IexKeyStats } from "../../types";
 import { StockDataKey } from "../../constants";
 import { iexRequest, symbolsPath, symbolsCacheValid, historicalPricesPath, historicalCacheValid, intradayCacheValid, intradayPath, summaryStatsPath } from "./functions";
 
@@ -15,7 +15,7 @@ export async function getSymbols() {
 
 // https://iexcloud.io/docs/api/#historical-prices
 export async function getHistoricalPrices(symbol: string, range: string) {
-  return iexRequest<StockDataKey.historicalPrices, IexHistoricalPrice[]>({
+  return iexRequest<StockDataKey.historicalPrices, Price[]>({
     category: StockDataKey.historicalPrices,
     path: historicalPricesPath({ symbol, range }),
   },
@@ -25,7 +25,7 @@ export async function getHistoricalPrices(symbol: string, range: string) {
 
 // https://iexcloud.io/docs/api/#intraday-prices
 export async function getIntradayPrices(symbol: string) {
-  return iexRequest<StockDataKey.intradayPrices, IexIntradayPrice[]>({
+  return iexRequest<StockDataKey.intradayPrices, Price[]>({
     category: StockDataKey.intradayPrices,
     path: intradayPath({ symbol }),
   },

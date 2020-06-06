@@ -1,17 +1,17 @@
 import { StockDataKey, UiStateKey, RefDataKey } from "../constants";
-import { IexIntradayPrice, IexHistoricalPrice, IexKeyStats, IexSymbol } from "./iexClientTypes";
+import { Price, IexKeyStats, IexSymbol } from "./iexClientTypes";
 import { TimeRange, StockTypeEntry } from ".";
 
 /** Stock Data Actions **/
 
 export interface IntradayPriceAction {
   type: StockDataKey.intradayPrices;
-  payload: IexIntradayPrice[];
+  payload: Price[];
 }
 
 export interface HistoricalPriceAction {
   type: StockDataKey.historicalPrices;
-  payload: IexHistoricalPrice[];
+  payload: Price[];
 }
 
 export interface SummaryStatsAction {

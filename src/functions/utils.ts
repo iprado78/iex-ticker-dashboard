@@ -11,6 +11,8 @@ export const buildUrl = (host: string, path?: string, queryParams?: any) => {
   return url.toString()
 }
 
+export const intradayDatetime = (date: string, time: string) => `${date} ${time}`
+
 // https://momentjs.com/docs/#/parsing/
 const cacheValid = (cacheDatetime: string, multiplier: number, granularity: 'minutes' | 'day') => !moment(cacheDatetime).isBefore(moment().subtract(multiplier, granularity))
 export const lastCalendarDay = (date: string) => cacheValid(date, 1, 'day')

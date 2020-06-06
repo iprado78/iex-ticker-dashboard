@@ -1,5 +1,5 @@
-import { IexSymbol, IexReqOptions, IntradayPricesPathBuilder, SymbolsPathBuilder, HistoricalPricesPathBuilder, SummaryStatsPathBuilder, IexResponseBody, IexHistoricalPrice, IexIntradayPrice, CacheValidator } from "../../types";
-import { buildUrl, lastCalendarDay, last15Minutes } from "../../functions";
+import { IexSymbol, IexReqOptions, IntradayPricesPathBuilder, SymbolsPathBuilder, HistoricalPricesPathBuilder, SummaryStatsPathBuilder, IexResponseBody, Price, CacheValidator } from "../../types";
+import { buildUrl, lastCalendarDay, last15Minutes, intradayDatetime } from "../../functions";
 import { StockDataKey } from "../../constants";
 
 export const API_KEY = "pk_63509e5b43384ab08845be28759fb5ea"
@@ -11,8 +11,8 @@ export const historicalPricesPath: HistoricalPricesPathBuilder = ({ symbol, rang
 export const summaryStatsPath: SummaryStatsPathBuilder = ({ symbol }) => `/stable/stock/${symbol}/stats`;
 
 export const symbolsCacheValid = ([{ date }]: IexSymbol[]) => lastCalendarDay(date)
-export const historicalCacheValid = ([{ date }]: IexHistoricalPrice[]) => lastCalendarDay(date)
-export const intradayCacheValid = ([{ date, minute }]: IexIntradayPrice[]) => last15Minutes(`${date} ${minute}`)
+export const historicalCacheValid = ([{ date }]: Price[]) => lastCalendarDay(date)
+export const intradayCacheValid = ([{ date, minute }]: Price[]) => !!minute && last15Minutes(intradayDatetime(date, minute))
 
 export async function iexRequest<T extends StockDataKey, Q extends IexResponseBody<T>>(reqOptions: IexReqOptions<T>, cacheValidator?: CacheValidator<T>) {
   const request = new Request(buildUrl(API_BASE_URL, reqOptions.path, { token: API_KEY }));

@@ -1,13 +1,13 @@
 export * from './actionTypes'
 export * from './iexClientTypes'
 import { StockDataKey, UiStateKey, RefDataKey } from "../constants";
-import { IexHistoricalPrice, IexIntradayPrice, IexKeyStats, IexSymbol } from "./iexClientTypes";
+import { Price, IexKeyStats, IexSymbol } from "./iexClientTypes";
 
 export type StockTypeEntry = [StockType, string]
 
 export interface StockData {
-  [StockDataKey.historicalPrices]: IexHistoricalPrice[];
-  [StockDataKey.intradayPrices]: IexIntradayPrice[];
+  [StockDataKey.historicalPrices]: Price[];
+  [StockDataKey.intradayPrices]: Price[];
   [StockDataKey.summaryStats]: IexKeyStats;
 }
 

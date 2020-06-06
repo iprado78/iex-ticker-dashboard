@@ -1,4 +1,4 @@
-import { StockDataKey } from "../constants";
+import { StockDataKey, StatsKeys } from "../constants";
 import { StockType } from ".";
 
 export interface IexSymbol {
@@ -11,79 +11,22 @@ export interface IexSymbol {
   "currency": string;
 }
 
-export interface IexIntradayPrice {
+export interface Price {
   "date": string,
-  "minute": string,
-  "label": string,
-  "marketOpen": number,
-  "marketClose": number,
-  "marketHigh": number,
-  "marketLow": number,
-  "marketAverage": number,
-  "marketVolume": number,
-  "marketNotional": number,
-  "marketNumberOfTrades": number,
-  "marketChangeOverTime": number,
-  "high": number,
-  "low": number,
-  "open": number,
-  "close": number,
-  "average": number,
-  "volume": number,
-  "notional": number,
-  "numberOfTrades": number,
-  "changeOverTime": number,
-}
-
-export interface IexHistoricalPrice {
-  "date": string,
+  "minute"?: string,
   "open": number,
   "close": number,
   "high": number,
   "low": number,
   "volume": number,
-  "uOpen": number,
-  "uClose": number,
-  "uHigh": number,
-  "uLow": number,
-  "uVolume": number,
-  "change": number,
-  "changePercent": number,
-  "label": string,
-  "changeOverTime": number
 }
 
-export interface IexKeyStats {
-  "companyName": "string",
-  "marketcap": number,
-  "week52high": number,
-  "week52low": number,
-  "week52change": number,
-  "sharesOutstanding": number,
-  "float": number,
-  "avg10Volume": number,
-  "avg30Volume": number,
-  "day200MovingAvg": number,
-  "day50MovingAvg": number,
-  "employees": number,
-  "ttmEPS": number,
-  "ttmDividendRate": number,
-  "dividendYield": number,
-  "nextDividendDate": string,
-  "exDividendDate": string,
-  "nextEarningsDate": string,
-  "peRatio": number,
-  "beta": number,
-  "maxChangePercent": number,
-  "year5ChangePercent": number,
-  "year2ChangePercent": number,
-  "year1ChangePercent": number,
-  "ytdChangePercent": number,
-  "month6ChangePercent": number,
-  "month3ChangePercent": number,
-  "month1ChangePercent": number,
-  "day30ChangePercent": number,
-  "day5ChangePercent": number,
+export type IexKeyStats = {
+  [key in StatsKeys]: number
+}
+
+export type SummaryStatsLabelMap = {
+  [key in StatsKeys]: string
 }
 
 export interface HistoricalPathBuilderOptions {
@@ -104,8 +47,8 @@ export type IntradayPricesPathBuilder = BasePathBuilder<IntradayPathBuilderOptio
 export type SummaryStatsPathBuilder = BasePathBuilder<SummaryStatsPathBuilderOptions>
 
 export type IexResponseBody<T extends StockDataKey> = T extends StockDataKey.symbols ? IexSymbol[] :
-  T extends StockDataKey.historicalPrices ? IexHistoricalPrice[] :
-  T extends StockDataKey.intradayPrices ? IexIntradayPrice[] :
+  T extends StockDataKey.historicalPrices ? Price[] :
+  T extends StockDataKey.intradayPrices ? Price[] :
   T extends StockDataKey.summaryStats ? IexKeyStats :
   never;
 

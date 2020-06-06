@@ -1,10 +1,22 @@
 import { StockTypeEntry, Option } from "../types";
+export * from './grids'
 
 export enum StockDataKey {
   symbols = 'symbols',
   historicalPrices = 'historicalPrices',
   intradayPrices = 'intradayPrices',
   summaryStats = 'summaryStats',
+}
+
+export enum StatsKeys {
+  marketCap = "marketcap",
+  yearHigh = "week52high",
+  yearLow = "week52low",
+  yearEps = "ttmEPS",
+  yearDPs = "ttmDividendRate",
+  dividentYield = "dividendYield",
+  peRation = "peRatio",
+  beta = "beta"
 }
 
 export enum UiStateKey {

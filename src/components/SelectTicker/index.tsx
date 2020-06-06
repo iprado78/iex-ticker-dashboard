@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     },
   },
   root: {
-    width: 600
+    width: 400
   }
 });
 
