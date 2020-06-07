@@ -41,3 +41,4 @@ export const formatMarketCap = (marketCap: number) =>
     marketCap >= BILLION ? marketCapNumber(marketCap / BILLION) + ' B' :
       marketCap >= MILLION ? marketCapNumber(marketCap / MILLION) + ' M' :
         formatVolume(marketCap)
+

@@ -33,8 +33,10 @@ export const tickersToOptions = (tickers: Ticker[]): Option[] =>
   }))
 
 
+const dateLabel = (date: string, minute?: string) => minute ? toDateTime(date, minute) : date
+
 const priceGridMap = ({ date, minute, open, high, low, close, volume }: Price) => ({
-  datetime: minute ? toDateTime(date, minute) : date,
+  datetime: dateLabel(date, minute),
   open: formatPrice(open),
   close: formatPrice(close),
   change: formatPrice(close - open),
@@ -44,7 +46,10 @@ const priceGridMap = ({ date, minute, open, high, low, close, volume }: Price) =
   volume: formatVolume(volume)
 })
 
-const priceChartPick = ({ date: _d, minute: _m, volume: _v, ...rest }: Price) => rest
+const priceChartPick = ({ date, minute, volume: _v, ...rest }: Price) => ({
+  x: moment(dateLabel(date, minute)).valueOf(),
+  ...rest
+})
 
 export const pricesToChart = (prices: Price[]) => prices.map(priceChartPick)
 

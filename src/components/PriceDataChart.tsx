@@ -5,11 +5,23 @@ import { Price } from "../types";
 import { pricesToChart } from "../functions";
 
 interface PriceDataChartProps {
-  prices: Price[]
+  title: string;
+  prices: Price[];
 }
 
-export function PriceDataChart({ prices }: PriceDataChartProps) {
+export function PriceDataChart({ prices, title }: PriceDataChartProps) {
   const options: Highcharts.Options = {
+    title: {
+      text: title
+    },
+    yAxis: {
+      title: {
+        text: 'Price'
+      }
+    },
+    xAxis: {
+      type: 'datetime',
+    },
     series: [{
       type: 'candlestick',
       data: pricesToChart(prices),

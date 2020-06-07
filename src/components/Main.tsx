@@ -15,7 +15,7 @@ export function Main({ uiState, stockData, dispatchUiState }: MainProps) {
   return (
     <main>
       <SelectTimeRange value={timeRange} dispatch={dispatchUiState} action={timeRangeAction} />
-      <PriceDataChart prices={historicalPrices} />
+      <PriceDataChart title={uiState.activeTicker} prices={historicalPrices} />
       <PriceDataGrid historicalPrices={historicalPrices} />
     </main>
   )

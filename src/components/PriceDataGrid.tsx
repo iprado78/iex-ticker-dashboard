@@ -5,7 +5,7 @@ import { defaultColDef, colDef } from "../constants";
 import { pricesToGrid } from "../functions";
 
 interface PriceDataGridProps {
-  historicalPrices: Price[]
+  historicalPrices: Price[],
 }
 export function PriceDataGrid({
   historicalPrices

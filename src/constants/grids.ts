@@ -2,14 +2,16 @@ import { ColDef } from "ag-grid-community";
 
 export const defaultColDef: ColDef = {
   sortable: true,
-  width: 100
+  width: 100,
+  filter: 'agNumberColumnFilter'
 };
 
 export const colDef: ColDef[] = [
   {
     headerName: 'Date & Time',
     field: 'datetime',
-    width: 200
+    width: 200,
+    filter: false
   },
   {
     headerName: 'Open',
