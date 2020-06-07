@@ -1,55 +1,21 @@
-import { StockDataKey, StatsKeys } from "../constants";
-import { StockType } from ".";
+import { StockDataKey } from "../constants";
+import { Price, SummaryStats, Ticker, CompanyReference, Logo, FiscalPeriodEarnings } from ".";
 
-export interface IexSymbol {
-  "symbol": string;
-  "name": string;
-  "date": string;
-  "exchange": string;
-  "type": StockType;
-  "region": string;
-  "currency": string;
+export interface TickerPathOptions {
+  ticker: string
+}
+export interface RangePathOptions extends TickerPathOptions {
+  range: string;
 }
 
-export interface Price {
-  "date": string,
-  "minute"?: string,
-  "open": number,
-  "close": number,
-  "high": number,
-  "low": number,
-  "volume": number,
-}
+export type PathBuilder<T> = (options: T) => string
 
-export type IexKeyStats = {
-  [key in StatsKeys]: number
-}
-
-export type SummaryStatsLabelMap = {
-  [key in StatsKeys]: string
-}
-
-export interface HistoricalPathBuilderOptions {
-  symbol: string,
-  range: string
-}
-export interface IntradayPathBuilderOptions {
-  symbol: string
-}
-export interface SummaryStatsPathBuilderOptions {
-  symbol: string
-}
-
-export type BasePathBuilder<T> = (options: T) => string
-export type SymbolsPathBuilder = BasePathBuilder<{}>
-export type HistoricalPricesPathBuilder = BasePathBuilder<HistoricalPathBuilderOptions>
-export type IntradayPricesPathBuilder = BasePathBuilder<IntradayPathBuilderOptions>
-export type SummaryStatsPathBuilder = BasePathBuilder<SummaryStatsPathBuilderOptions>
-
-export type IexResponseBody<T extends StockDataKey> = T extends StockDataKey.symbols ? IexSymbol[] :
+export type IexResponseBody<T extends StockDataKey> = T extends StockDataKey.tickers ? Ticker[] :
   T extends StockDataKey.historicalPrices ? Price[] :
-  T extends StockDataKey.intradayPrices ? Price[] :
-  T extends StockDataKey.summaryStats ? IexKeyStats :
+  T extends StockDataKey.summaryStats ? SummaryStats :
+  T extends StockDataKey.company ? CompanyReference :
+  T extends StockDataKey.logo ? Logo :
+  T extends StockDataKey.earnings ? FiscalPeriodEarnings :
   never;
 
 export interface IexReqOptions<T extends StockDataKey> {

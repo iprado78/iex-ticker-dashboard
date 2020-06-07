@@ -1,15 +1,16 @@
 import { ColDef } from "ag-grid-community";
 
-const allDefaults: ColDef = {
+export const defaultColDef: ColDef = {
   sortable: true,
+  width: 100
 };
 
-export const intradayDefaultColDef: ColDef = {
-  ...allDefaults,
-  width: 125,
-};
-
-const baseColDef: ColDef[] = [
+export const colDef: ColDef[] = [
+  {
+    headerName: 'Date & Time',
+    field: 'datetime',
+    width: 200
+  },
   {
     headerName: 'Open',
     field: 'open',
@@ -19,7 +20,7 @@ const baseColDef: ColDef[] = [
     field: 'close',
   },
   {
-    headerName: 'Change (Bps)',
+    headerName: 'Change',
     field: 'change',
   },
   {
@@ -31,30 +32,11 @@ const baseColDef: ColDef[] = [
     field: 'low',
   },
   {
-    headerName: 'Range (Bps)',
+    headerName: 'Range',
     field: 'range',
   },
   {
     headerName: 'Volume',
     field: 'volume'
   }
-
-];
-
-export const intradayColDef: ColDef[] = [
-  {
-    headerName: 'Time',
-    field: 'datetime',
-  },
-  ...baseColDef,
-];
-
-export const historicalDefaultColDef: ColDef = intradayDefaultColDef;
-
-export const historicalColDef: ColDef[] = [
-  {
-    headerName: 'Date',
-    field: 'datetime',
-  },
-  ...baseColDef,
 ];

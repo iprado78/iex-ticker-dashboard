@@ -1,29 +1,22 @@
 import React from 'react';
-import { StockData, UiState } from '../types';
-import { UiStateKey, StockDataKey, } from '../constants';
-import { HistoricalGrid, IntradayGrid } from '../components';
+import { StockData, UiState, UiStateAction } from '../types';
+import { PriceDataGrid, SelectTimeRange, PriceDataChart } from '.';
+import { timeRangeAction } from '../functions';
 
 interface MainProps {
   stockData: StockData,
-  uiState: UiState
+  uiState: UiState,
+  dispatchUiState: React.Dispatch<UiStateAction>
 }
 
-export function Main({ uiState, stockData }: MainProps) {
+export function Main({ uiState, stockData, dispatchUiState }: MainProps) {
+  const { timeRange } = uiState
+  const { historicalPrices } = stockData
   return (
     <main>
-      <div>Time range seelct</div>
-      <div>
-        <span>Chart 1</span>
-        <span>Chart 2</span>
-        <span>Chart 3</span>
-      </div>
-      <div>
-        {
-          uiState[UiStateKey.timeRange] === 'today' ?
-            <IntradayGrid intradayPrices={stockData[StockDataKey.intradayPrices]} />
-            : <HistoricalGrid historicalPrices={stockData[StockDataKey.historicalPrices]} />
-        }
-      </div>
+      <SelectTimeRange value={timeRange} dispatch={dispatchUiState} action={timeRangeAction} />
+      <PriceDataChart prices={historicalPrices} />
+      <PriceDataGrid historicalPrices={historicalPrices} />
     </main>
   )
 }

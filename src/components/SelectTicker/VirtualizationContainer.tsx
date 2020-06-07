@@ -44,10 +44,8 @@ const verticalPadding = 2 * LISTBOX_PADDING
 export const VirtualiztionContainer = React.forwardRef<HTMLUListElement>(function (props, ref) {
   const { children, ...other } = props;
   const itemData = React.Children.toArray(children);
-  const theme = useTheme();
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true });
   const itemCount = itemData.length;
-  const itemSize = smUp ? 36 : 48;
+  const itemSize = 54;
   const listHeight = innerHeight(itemCount, itemSize) + verticalPadding
   const gridRef = useResetCache(itemCount);
 

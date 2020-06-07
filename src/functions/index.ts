@@ -1,5 +1,6 @@
 export * from './utils'
 export * from './hydrateRefData'
 export * from './hydrateStockData'
-export * from './viewModelProjectors'
+export * from './modelMaps'
 export * from './actionCreators'
+export * from './hydrateCompanyData'

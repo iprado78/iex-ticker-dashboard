@@ -2,7 +2,7 @@ import { RefDataKey, stockTypes } from "../constants";
 import { RefData, RefDataAction } from "../types";
 
 export const REF_DATA_DEFAULT_STATE: RefData = {
-  [RefDataKey.symbols]: [],
+  [RefDataKey.tickers]: [],
   [RefDataKey.stockTypes]: stockTypes,
 }
 

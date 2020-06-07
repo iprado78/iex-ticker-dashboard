@@ -1,6 +1,7 @@
-import { getHistoricalPrices, getIntradayPrices, getSummaryStats } from "../services/IexClient";
+import { getHistoricalPrices, getSummaryStats } from "./IexClient";
 import { StockDataKey } from "../constants";
-import { IntradayPriceAction, HistoricalPriceAction, SummaryStatsAction, StockDataAction, UiState } from "../types";
+import { HistoricalPriceAction, SummaryStatsAction, StockDataAction, UiState } from "../types";
+import { timeRangeKeyToRangePath } from "./modelMaps";
 
 interface StockDataUpdateParams {
   uiState: UiState,
@@ -8,30 +9,18 @@ interface StockDataUpdateParams {
 }
 
 export function hydrateStockData(params: StockDataUpdateParams) {
-  hydrateIntradayData(params);
   hydrateSummaryStatsData(params);
   hydrateHistoricalData(params);
 }
 
 function hydrateHistoricalData({ uiState, dispatch }: StockDataUpdateParams) {
   const { activeTicker, timeRange } = uiState
-  getHistoricalPrices(activeTicker, timeRange)
+  getHistoricalPrices(activeTicker, timeRangeKeyToRangePath(timeRange))
     .then(res =>
       dispatch({
         type: StockDataKey.historicalPrices,
         payload: res
       } as HistoricalPriceAction)
-    )
-}
-
-function hydrateIntradayData({ uiState, dispatch }: StockDataUpdateParams) {
-  const { activeTicker } = uiState
-  getIntradayPrices(activeTicker)
-    .then(res =>
-      dispatch({
-        type: StockDataKey.intradayPrices,
-        payload: res
-      } as IntradayPriceAction)
     )
 }
 

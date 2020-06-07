@@ -1,9 +1,9 @@
 import { UiState, UiStateAction } from "../types";
-import { UiStateKey } from "../constants";
+import { UiStateKey, TimeRangeKey } from "../constants";
 
 export const UI_DEFAULT_STATE: UiState = {
-  [UiStateKey.activeTicker]: 'aapl',
-  [UiStateKey.timeRange]: 'today',
+  [UiStateKey.activeTicker]: 'AAPL',
+  [UiStateKey.timeRange]: TimeRangeKey.today,
   // [UiStateKey.stockType]: 'cs',
   // [UiStateKey.region]: 'US',
   // [UiStateKey.exchange]: 'NAS'

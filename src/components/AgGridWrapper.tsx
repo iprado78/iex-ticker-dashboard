@@ -9,7 +9,7 @@ export function AgGridWrapper(props: AgGridReactProps) {
     <Card>
       <div
         className="ag-theme-balham"
-        style={{ height: '600px', maxWidth: '1400px', width: '100%' }}
+        style={{ height: '600px', width: '100%' }}
       >
         <AgGridReact {...props} />
       </div>

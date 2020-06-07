@@ -1,19 +1,19 @@
 import React from "react";
 import { AgGridWrapper } from "./AgGridWrapper";
 import { Price } from "../types";
-import { historicalColDef, historicalDefaultColDef } from "../constants";
+import { defaultColDef, colDef } from "../constants";
 import { pricesToGrid } from "../functions";
 
-interface HistoricalGridProps {
+interface PriceDataGridProps {
   historicalPrices: Price[]
 }
-export function HistoricalGrid({
+export function PriceDataGrid({
   historicalPrices
-}: HistoricalGridProps) {
+}: PriceDataGridProps) {
   return (
     <AgGridWrapper
-      columnDefs={historicalColDef}
-      defaultColDef={historicalDefaultColDef}
+      columnDefs={colDef}
+      defaultColDef={defaultColDef}
       rowData={pricesToGrid(historicalPrices)}
     />
   );

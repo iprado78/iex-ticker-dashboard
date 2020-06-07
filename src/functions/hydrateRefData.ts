@@ -1,5 +1,5 @@
-import { UiState, RefDataAction, SymbolsAction } from "../types"
-import { getSymbols } from "../services/IexClient";
+import { UiState, RefDataAction, TickersAction } from "../types"
+import { getSymbols } from "./IexClient";
 import { RefDataKey, UiStateKey } from "../constants";
 
 interface HydrateRefDataParams {
@@ -9,11 +9,11 @@ interface HydrateRefDataParams {
 
 export function hydrateRefData({ uiState, dispatch }: HydrateRefDataParams) {
 
-  getSymbols().then(apiSymbols => {
+  getSymbols().then(apiTickers => {
     dispatch({
-      type: RefDataKey.symbols,
-      payload: apiSymbols
-    } as SymbolsAction)
+      type: RefDataKey.tickers,
+      payload: apiTickers.filter(ticker => ticker.type === 'cs')
+    } as TickersAction)
   })
 }
 
