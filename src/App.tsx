@@ -4,8 +4,7 @@ import { theme } from './theme';
 import { Header, Main, Sidebar, SelectTicker, SummaryStatsGrid } from './components';
 import { stockDataReducer, STOCK_DATA_DEFAULT_STATE, uiStateReducer, UI_DEFAULT_STATE, refDataReducer, REF_DATA_DEFAULT_STATE, companyDataReducer, COMPANY_DATA_DEFAULT_STATE } from './reducers';
 import { StockData, UiState, StockDataAction, UiStateAction, RefData, RefDataAction, CompanyData, CompanyDataAction } from './types';
-import { hydrateStockData, hydrateRefData, activeTickerAction, symbolsToOptions, hydrateCompanyData } from './functions';
-import { DEFAULT_OPTION } from './constants';
+import { hydrateStockData, hydrateRefData, activeTickerAction, hydrateCompanyData } from './functions';
 
 
 function App() {
@@ -20,23 +19,21 @@ function App() {
     hydrateCompanyData({ uiState, dispatch: dispatchCompanyData })
   }, [uiState])
 
-  const symbolOptions = symbolsToOptions(refData.tickers)
-  const selectedSymbolOption = symbolOptions.find(symbol => symbol.value === uiState.activeTicker) || DEFAULT_OPTION
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
 
   return (
     <ThemeProvider theme={theme}>
       <Header>
-        <SelectTicker selectedSymbolOption={selectedSymbolOption} dispatch={dispatchUiState} action={activeTickerAction} symbolOptions={symbolOptions} />
+        <SelectTicker tickers={refData.tickers} selectedTicker={uiState.activeTicker} dispatch={dispatchUiState} action={activeTickerAction} />
       </Header>
       <Grid container>
-        <Grid item xs={12} md={10} lg={9} xl={8}>
+        <Grid item xs={12} md={10} lg={8}>
           <SummaryStatsGrid summaryStats={stockData.summaryStats} />
           <Main stockData={stockData} uiState={uiState} dispatchUiState={dispatchUiState} />
         </Grid>
         {
           isDesktop && (
-            <Grid item md={2} lg={3} xl={4}>
+            <Grid item md={2} lg={4}>
               <Sidebar companyData={companyData} />
             </Grid>)
         }

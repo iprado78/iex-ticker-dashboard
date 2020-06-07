@@ -18,7 +18,7 @@ export function timeRangeKeyToRangePath(timeRangeKey: TimeRangeKey) {
     [today]: `date/${toApiDateFrag(today)}`,
     [yesterday]: `date/${toApiDateFrag(yesterday)}`,
     [lastWeek]: '5dm',
-    [lastMonth]: '1mm',
+    [lastMonth]: '1m',
     [lastQuarter]: '3m',
     [lastYear]: '1y'
   }
@@ -26,8 +26,8 @@ export function timeRangeKeyToRangePath(timeRangeKey: TimeRangeKey) {
   return map[timeRangeKey]
 }
 
-export const symbolsToOptions = (symbols: Ticker[]): Option[] =>
-  symbols.map(({ symbol, name }) => ({
+export const tickersToOptions = (tickers: Ticker[]): Option[] =>
+  tickers.map(({ symbol, name }) => ({
     label: `${symbol} - ${name}`,
     value: symbol
   }))

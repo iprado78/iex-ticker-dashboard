@@ -27,7 +27,7 @@ export function SelectTimeRange({ value, dispatch, action }: SelectTimeRangeProp
   }, [dispatch, action])
 
   return (
-    <FormControl component="fieldset">
+    <FormControl component="fieldset" style={{ padding: 8 }}>
       <RadioGroup
         aria-label={id}
         id={id}
