@@ -1,5 +1,5 @@
 import moment from 'moment-business-days';
-import { Ticker, Option, Price, RangePathMap } from "../types";
+import { Ticker, Option, Price, TimeRangeStringMap } from "../types";
 import { toDateTime, formatPrice, formatVolume, normalizeToBusinessDay } from "./utils";
 import { TimeRangeKey } from '../constants';
 
@@ -15,7 +15,7 @@ const toApiDateFrag = (timeRange: TimeRangeKey.yesterday | TimeRangeKey.today) =
 export function timeRangeKeyToRangePath(timeRangeKey: TimeRangeKey) {
   const { today, yesterday, lastWeek, lastMonth, lastQuarter, lastYear } = TimeRangeKey
 
-  const map: RangePathMap = {
+  const map: TimeRangeStringMap = {
     [today]: `date/${toApiDateFrag(today)}`,
     [yesterday]: `date/${toApiDateFrag(yesterday)}`,
     [lastWeek]: '5dm',
@@ -25,6 +25,20 @@ export function timeRangeKeyToRangePath(timeRangeKey: TimeRangeKey) {
   }
 
   return map[timeRangeKey]
+}
+
+export function timeRangeKeyToChartLabel(timeRangeKey: TimeRangeKey) {
+  const { today, yesterday, lastWeek, lastMonth, lastQuarter, lastYear } = TimeRangeKey
+
+  const map: TimeRangeStringMap = {
+    [today]: '1-Minute',
+    [yesterday]: '1-Minute',
+    [lastWeek]: '10-Minute',
+    [lastMonth]: '1-Day',
+    [lastQuarter]: '1-Day',
+    [lastYear]: '1-Day'
+  }
+  return `${timeRangeKey} - ${map[timeRangeKey]} Periods`
 }
 
 export const tickersToOptions = (tickers: Ticker[]): Option[] =>

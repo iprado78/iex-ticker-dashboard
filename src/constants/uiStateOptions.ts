@@ -10,10 +10,10 @@ export const DEFAULT_OPTION: Option = {
 export const statLabelMap: SummaryStatsLabelMap = {
   peRatio: "P/E Ratio",
   marketcap: "Market Cap",
-  dividendYield: "Dividend Yield",
+  dividendYield: "Div Yield",
   beta: "Beta",
-  ttmDividendRate: "Dividend Rate",
-  ttmEPS: "Earnings Rate"
+  ttmDividendRate: "Div Rate",
+  ttmEPS: "Earnings"
 }
 
 export const statsKeys = Object.keys(statLabelMap) as StatKey[]

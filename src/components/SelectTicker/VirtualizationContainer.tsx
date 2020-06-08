@@ -2,13 +2,10 @@
  * This module is adapted from the example code in 
  * https://material-ui.com/components/autocomplete/#virtualization
  */
-
 import React, { useRef } from 'react';
-import { useMediaQuery } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
 import { VariableSizeList, ListChildComponentProps } from 'react-window';
 
-const LISTBOX_PADDING = 8; // px
+const LISTBOX_PADDING = 8;
 
 function ListElementRenderer(props: ListChildComponentProps) {
   const { data, index, style } = props;

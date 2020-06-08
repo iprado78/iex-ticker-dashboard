@@ -1,6 +1,6 @@
 import { TimeRangeKey, StatKey, StockType } from "../constants";
 
-export type RangePathMap = {
+export type TimeRangeStringMap = {
   [key in TimeRangeKey]: string
 }
 

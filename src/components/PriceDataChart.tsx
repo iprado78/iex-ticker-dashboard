@@ -2,17 +2,27 @@ import React from "react";
 import * as Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { Price } from "../types";
-import { pricesToChart } from "../functions";
+import { pricesToChart, timeRangeKeyToChartLabel } from "../functions";
+import { TimeRangeKey } from "../constants";
 
 interface PriceDataChartProps {
-  title: string;
+  ticker: string;
+  timeRange: TimeRangeKey
   prices: Price[];
 }
 
-export function PriceDataChart({ prices, title }: PriceDataChartProps) {
+export function PriceDataChart({ prices, ticker, timeRange }: PriceDataChartProps) {
   const options: Highcharts.Options = {
     title: {
-      text: title
+      text: `${ticker} - Draw Rect to Zoom`
+    },
+    chart: {
+      zoomType: 'xy'
+    },
+    rangeSelector: {
+      verticalAlign: 'top',
+      x: 0,
+      y: 0
     },
     yAxis: {
       title: {
@@ -23,9 +33,9 @@ export function PriceDataChart({ prices, title }: PriceDataChartProps) {
       type: 'datetime',
     },
     series: [{
+      name: timeRangeKeyToChartLabel(timeRange),
       type: 'candlestick',
       data: pricesToChart(prices),
-      turboThreshold: 2000
     } as Highcharts.SeriesCandlestickOptions]
   }
   return (

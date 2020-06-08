@@ -1,4 +1,5 @@
-import moment, { Moment } from 'moment-business-days'
+import moment from 'moment-business-days'
+import { TimeRangeKey } from '../constants';
 
 export const buildUrl = (host: string, path?: string, queryParams?: any) => {
   const url = new URL(host);
@@ -13,10 +14,10 @@ export const buildUrl = (host: string, path?: string, queryParams?: any) => {
 
 export const toDateTime = (date: string, time: string) => `${date} ${time}`
 
-// https://momentjs.com/docs/#/parsing/
-const cacheValid = (cacheDatetime: string, multiplier: number, granularity: 'minutes' | 'day') => !moment(cacheDatetime).isBefore(normalizeToBusinessDay().subtract(multiplier, granularity))
-export const lastCalendarDay = (date: string) => cacheValid(date, 1, 'day')
-export const last15Minutes = (datetime: string) => cacheValid(datetime, 15, 'minutes')
+const cacheValid = (cacheTimestamp: string, multiplier: number, granularity: 'minutes' | 'day' | 'quarter') => !moment(cacheTimestamp).isBefore(normalizeToBusinessDay().subtract(multiplier, granularity))
+export const lastDay = (cacheTimestamp: string) => cacheValid(cacheTimestamp, 1, 'day')
+export const lastQuarter = (cacheTimestamp: string) => cacheValid(cacheTimestamp, 1, 'quarter')
+const last15Minutes = (cacheTimestamp: string) => cacheValid(cacheTimestamp, 15, 'minutes')
 
 const formatWrapper = (max = 2, min = 2) => new Intl.NumberFormat(
   'en-US',
@@ -42,8 +43,12 @@ export const formatMarketCap = (marketCap: number) =>
       marketCap >= MILLION ? marketCapNumber(marketCap / MILLION) + ' M' :
         formatVolume(marketCap)
 
-const afterOpening = (datetime: Moment) => {
-  return datetime.hours() >= 9 && datetime.minutes() >= 30;
+const afterOpening = (datetime = moment()) => datetime.hours() >= 9 && datetime.minutes() >= 30;
+const beforeClose = (datetime = moment()) => datetime.hours() < 16
+
+export const cacheValidatorFromTimeRange = (timeRange: TimeRangeKey) => {
+  console.log('TimeRangeKey', )
+  return timeRange === 'Today' && afterOpening() && beforeClose() ? last15Minutes : lastDay
 }
 
 export const normalizeToBusinessDay = (date = moment(), checkOpening = true) => {

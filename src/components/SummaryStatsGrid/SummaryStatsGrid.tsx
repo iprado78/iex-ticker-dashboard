@@ -1,6 +1,6 @@
 import React from 'react'
-import { SummaryStats } from '../../types';
 import { Grid } from '@material-ui/core';
+import { SummaryStats } from '../../types';
 import { statsKeys, statLabelMap } from '../../constants';
 import { formatSummaryStats, formatMarketCap } from '../../functions';
 import { Stat } from './StatCard';
@@ -12,7 +12,6 @@ interface SummaryStatsProps {
 export function SummaryStatsGrid({
   summaryStats
 }: SummaryStatsProps) {
-
   return (
     <div style={{ padding: 8 }}>
       <Grid container justify="center" spacing={2}>

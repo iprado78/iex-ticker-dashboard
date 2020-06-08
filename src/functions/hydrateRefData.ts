@@ -1,24 +1,16 @@
-import { UiState, RefDataAction, TickersAction } from "../types"
-import { getSymbols } from "./IexClient";
-import { RefDataKey, UiStateKey } from "../constants";
+import { RefDataAction, TickersAction } from "../types"
+import { getTickers } from "./IexClient";
+import { RefDataKey } from "../constants";
 
 interface HydrateRefDataParams {
-  uiState: UiState;
   dispatch: React.Dispatch<RefDataAction>
 }
 
-export function hydrateRefData({ uiState, dispatch }: HydrateRefDataParams) {
-
-  getSymbols().then(apiTickers => {
+export function hydrateRefData({ dispatch }: HydrateRefDataParams) {
+  getTickers().then(apiTickers => {
     dispatch({
       type: RefDataKey.tickers,
       payload: apiTickers.filter(ticker => ticker.type === 'cs')
     } as TickersAction)
   })
 }
-
-// apiSymbols.filter(symbol => {
-  // return symbol.type === uiState[UiStateKey.stockType] &&
-  //   symbol.region === uiState[UiStateKey.region] &&
-  //   symbol.exchange === uiState[UiStateKey.exchange]
-// })

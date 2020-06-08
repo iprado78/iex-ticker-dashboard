@@ -12,6 +12,7 @@ export function PriceDataGrid({
 }: PriceDataGridProps) {
   return (
     <AgGridWrapper
+      suppressMenuHide
       columnDefs={colDef}
       defaultColDef={defaultColDef}
       rowData={pricesToGrid(historicalPrices)}

@@ -23,4 +23,4 @@ export interface IexReqOptions<T extends StockDataKey> {
   path: string
 }
 
-export type CacheValidator<T extends StockDataKey> = (responseBody: IexResponseBody<T>) => boolean
+export type CacheValidator = (cacheTimestamp: string) => boolean

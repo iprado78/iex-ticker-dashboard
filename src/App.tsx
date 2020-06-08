@@ -6,7 +6,6 @@ import { stockDataReducer, STOCK_DATA_DEFAULT_STATE, uiStateReducer, UI_DEFAULT_
 import { StockData, UiState, StockDataAction, UiStateAction, RefData, RefDataAction, CompanyData, CompanyDataAction } from './types';
 import { hydrateStockData, hydrateRefData, activeTickerAction, hydrateCompanyData } from './functions';
 
-
 function App() {
   const [uiState, dispatchUiState] = useReducer<Reducer<UiState, UiStateAction>>(uiStateReducer, UI_DEFAULT_STATE);
   const [refData, dispatchRefData] = useReducer<Reducer<RefData, RefDataAction>>(refDataReducer, REF_DATA_DEFAULT_STATE)
@@ -15,25 +14,24 @@ function App() {
 
   useEffect(() => {
     hydrateStockData({ uiState, dispatch: dispatchStockData });
-    hydrateRefData({ uiState, dispatch: dispatchRefData })
+    hydrateRefData({ dispatch: dispatchRefData })
     hydrateCompanyData({ uiState, dispatch: dispatchCompanyData })
   }, [uiState])
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
-
   return (
     <ThemeProvider theme={theme}>
       <Header>
         <SelectTicker tickers={refData.tickers} selectedTicker={uiState.activeTicker} dispatch={dispatchUiState} action={activeTickerAction} />
       </Header>
       <Grid container>
-        <Grid item xs={12} md={10} lg={8}>
+        <Grid item xs={12} md={9} lg={8} xl={7} style={{ height: '100%' }}>
           <SummaryStatsGrid summaryStats={stockData.summaryStats} />
           <Main stockData={stockData} uiState={uiState} dispatchUiState={dispatchUiState} />
         </Grid>
         {
           isDesktop && (
-            <Grid item md={2} lg={4}>
+            <Grid item md={3} lg={4} xl={5}>
               <Sidebar companyData={companyData} />
             </Grid>)
         }

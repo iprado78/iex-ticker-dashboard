@@ -16,7 +16,6 @@ const useStyles = makeStyles(() => ({
     fontSize: '20px'
   }
 }));
-
 export const Header = ({ children }: HeaderProps) => {
   const classes = useStyles();
   return (

@@ -1,10 +1,7 @@
-import { UiStateKey, StatKey, TimeRangeKey, StockType } from "../constants";
+import { UiStateKey, TimeRangeKey, StockType } from "../constants";
 
 export interface UiState {
   [UiStateKey.activeTicker]: string,
-  // [UiStateKey.region]: string,
-  // [UiStateKey.exchange]: string,
-  // [UiStateKey.stockType]: StockType,
   [UiStateKey.timeRange]: TimeRangeKey
 }
 
