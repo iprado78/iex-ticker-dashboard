@@ -1,12 +1,13 @@
-import moment from 'moment';
+import moment from 'moment-business-days';
 import { Ticker, Option, Price, RangePathMap } from "../types";
-import { toDateTime, formatPrice, formatVolume } from "./utils";
+import { toDateTime, formatPrice, formatVolume, normalizeToBusinessDay } from "./utils";
 import { TimeRangeKey } from '../constants';
 
+
 const toApiDateFrag = (timeRange: TimeRangeKey.yesterday | TimeRangeKey.today) => {
-  let date = moment();
+  let date = normalizeToBusinessDay();
   if (timeRange === TimeRangeKey.yesterday) {
-    date = date.subtract(1, 'day');
+    date = normalizeToBusinessDay(date.subtract(1, 'day'), false);
   }
   return date.format('YYYYMMDD')
 }
@@ -53,4 +54,4 @@ const priceChartPick = ({ date, minute, volume: _v, ...rest }: Price) => ({
 
 export const pricesToChart = (prices: Price[]) => prices.map(priceChartPick)
 
-export const pricesToGrid = (prices: Price[]) => prices.map(priceGridMap)
+export const pricesToGrid = (prices: Price[]) => prices.map(priceGridMap).reverse()

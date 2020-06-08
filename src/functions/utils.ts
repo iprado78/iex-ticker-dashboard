@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment, { Moment } from 'moment-business-days'
 
 export const buildUrl = (host: string, path?: string, queryParams?: any) => {
   const url = new URL(host);
@@ -14,7 +14,7 @@ export const buildUrl = (host: string, path?: string, queryParams?: any) => {
 export const toDateTime = (date: string, time: string) => `${date} ${time}`
 
 // https://momentjs.com/docs/#/parsing/
-const cacheValid = (cacheDatetime: string, multiplier: number, granularity: 'minutes' | 'day') => !moment(cacheDatetime).isBefore(moment().subtract(multiplier, granularity))
+const cacheValid = (cacheDatetime: string, multiplier: number, granularity: 'minutes' | 'day') => !moment(cacheDatetime).isBefore(normalizeToBusinessDay().subtract(multiplier, granularity))
 export const lastCalendarDay = (date: string) => cacheValid(date, 1, 'day')
 export const last15Minutes = (datetime: string) => cacheValid(datetime, 15, 'minutes')
 
@@ -42,3 +42,10 @@ export const formatMarketCap = (marketCap: number) =>
       marketCap >= MILLION ? marketCapNumber(marketCap / MILLION) + ' M' :
         formatVolume(marketCap)
 
+const afterOpening = (datetime: Moment) => {
+  return datetime.hours() >= 9 && datetime.minutes() >= 30;
+}
+
+export const normalizeToBusinessDay = (date = moment(), checkOpening = true) => {
+  return date.isBusinessDay() && (checkOpening ? afterOpening(date) : true) ? date : date.prevBusinessDay()
+}
