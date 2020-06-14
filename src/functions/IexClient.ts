@@ -1,7 +1,7 @@
 import { Ticker, IexReqOptions, SummaryStats, IexResponseBody, Price, CacheValidator, PathBuilder, RangePathOptions, TickerPathOptions, CompanyReference, FiscalPeriodEarnings, Logo } from "../types";
 import { buildUrl } from ".";
-import { StockDataKey, TimeRangeKey } from "../constants";
-import { lastDay, lastQuarter, cacheValidatorFromTimeRange } from "./utils";
+import { StockDataKey, TimeRangeKey, CACHE_TIMESTAMP_HEADER } from "../constants";
+import { cachedSinceYesterdayClose, cachedSinceLastQuarter, cacheValidatorFromTimeRange } from "./utils";
 import { timeRangeKeyToRangePath } from "./modelMaps";
 
 const API_KEY = "pk_63509e5b43384ab08845be28759fb5ea"
@@ -22,7 +22,7 @@ export async function getTickers() {
     category: StockDataKey.tickers,
     path: tickersRefPath({}),
   },
-    lastDay
+    cachedSinceYesterdayClose
   )
 }
 
@@ -42,7 +42,7 @@ export async function getSummaryStats(ticker: string) {
     category: StockDataKey.summaryStats,
     path: summaryStatsPath({ ticker }),
   },
-    lastDay
+    cachedSinceYesterdayClose
   )
 }
 
@@ -52,7 +52,7 @@ export async function getCompanyRef(ticker: string) {
     category: StockDataKey.company,
     path: companyRefPath({ ticker }),
   },
-    lastQuarter)
+    cachedSinceLastQuarter)
 }
 
 // https://iexcloud.io/docs/api/#earnings
@@ -61,7 +61,7 @@ export async function getEarnings(ticker: string) {
     category: StockDataKey.earnings,
     path: earningsPath({ ticker })
   },
-    lastQuarter)
+    cachedSinceLastQuarter)
 }
 
 // https://iexcloud.io/docs/api/#logo
@@ -70,7 +70,7 @@ export async function getLogo(ticker: string) {
     category: StockDataKey.logo,
     path: logoPath({ ticker })
   },
-    lastQuarter)
+    cachedSinceLastQuarter)
 }
 
 async function iexRequest<T extends StockDataKey, Q extends IexResponseBody<T>>(reqOptions: IexReqOptions<T>, cacheValidator?: CacheValidator) {
@@ -80,7 +80,7 @@ async function iexRequest<T extends StockDataKey, Q extends IexResponseBody<T>>(
     cache = await window.caches.open(reqOptions.category)
     const cachedResponse = await cache.match(request);
     if (cachedResponse) {
-      const cacheTimestamp = cachedResponse.headers.get("X-Cache-Timestamp");
+      const cacheTimestamp = cachedResponse.headers.get(CACHE_TIMESTAMP_HEADER);
       if (cacheTimestamp && cacheValidator(cacheTimestamp)) {
         const resolved: Q = await cachedResponse.json();
         return resolved;
@@ -95,10 +95,10 @@ async function iexRequest<T extends StockDataKey, Q extends IexResponseBody<T>>(
     const body: Q = await newResponse.json();
 
     if (cache) {
-      // Because response headers are immutable, must manually clone.
+      // Because response headers are immutable, must manually reconstruct response
       const { status, statusText } = newResponse;
       const headers = new Headers({
-        "X-Cache-Timestamp": Date.now().toString()
+        [CACHE_TIMESTAMP_HEADER]: new Date().toISOString()
       });
       const clonedResponse = await new Response(new Blob([JSON.stringify(body)], { type: 'application/json' }), { status, headers, statusText })
       cache.put(request, clonedResponse)
