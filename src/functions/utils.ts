@@ -1,4 +1,4 @@
-import moment from 'moment-business-days'
+import moment, { Moment } from 'moment-business-days'
 import { TimeRangeKey } from '../constants';
 
 export const buildUrl = (host: string, path?: string, queryParams?: any) => {
@@ -12,12 +12,27 @@ export const buildUrl = (host: string, path?: string, queryParams?: any) => {
   return url.toString()
 }
 
+/**
+ * 
+ * @param date - YYY-MM-DD
+ * @param time - HH:mm
+ */
 export const toDateTime = (date: string, time: string) => `${date} ${time}`
 
-const cacheValid = (cacheTimestamp: string, multiplier: number, granularity: 'minutes' | 'day' | 'quarter') => !moment(cacheTimestamp).isBefore(normalizeToBusinessDay().subtract(multiplier, granularity))
-export const lastDay = (cacheTimestamp: string) => cacheValid(cacheTimestamp, 1, 'day')
-export const lastQuarter = (cacheTimestamp: string) => cacheValid(cacheTimestamp, 1, 'quarter')
-const last15Minutes = (cacheTimestamp: string) => cacheValid(cacheTimestamp, 15, 'minutes')
+const cacheValid = (cacheTimeStamp: string, boundary: Moment) => {
+  return !moment(cacheTimeStamp).isBefore(boundary)
+}
+
+export const cachedSinceYesterdayClose = (cacheTimestamp: string, now = moment()) => {
+  return cacheValid(cacheTimestamp, now.prevBusinessDay().hours(16))
+}
+
+export const cachedSinceTodayClose = (cacheTimestamp: string, now = moment()) => {
+  return cacheValid(cacheTimestamp, now.hours(16))
+}
+
+export const cachedSinceLastQuarter = (cacheTimestamp: string) => cacheValid(cacheTimestamp, moment().subtract(1, 'quarter'))
+export const cachedSinceLast15Minutes = (cacheTimestamp: string) => cacheValid(cacheTimestamp, moment().subtract(15, 'minutes'))
 
 const formatWrapper = (max = 2, min = 2) => new Intl.NumberFormat(
   'en-US',
@@ -38,19 +53,23 @@ const BILLION = Math.pow(10, 9);
 const TRILLION = Math.pow(10, 12);
 
 export const formatMarketCap = (marketCap: number) =>
-  marketCap >= TRILLION ? marketCapNumber(marketCap / TRILLION) + ' T' :
-    marketCap >= BILLION ? marketCapNumber(marketCap / BILLION) + ' B' :
-      marketCap >= MILLION ? marketCapNumber(marketCap / MILLION) + ' M' :
+  marketCap >= TRILLION ? marketCapNumber(marketCap / TRILLION) + 'T' :
+    marketCap >= BILLION ? marketCapNumber(marketCap / BILLION) + 'B' :
+      marketCap >= MILLION ? marketCapNumber(marketCap / MILLION) + 'M' :
         formatVolume(marketCap)
 
-const afterOpening = (datetime = moment()) => datetime.hours() >= 9 && datetime.minutes() >= 30;
-const beforeClose = (datetime = moment()) => datetime.hours() < 16
+export const afterOpening = (datetime = moment()) => datetime.hours() > 9 ||
+  (datetime.hours() === 9 && datetime.minutes() >= 30);
 
-export const cacheValidatorFromTimeRange = (timeRange: TimeRangeKey) => {
-  console.log('TimeRangeKey', )
-  return timeRange === 'Today' && afterOpening() && beforeClose() ? last15Minutes : lastDay
+export const beforeClose = (datetime = moment()) => datetime.hours() < 16
+
+export const cacheValidatorFromTimeRange = (timeRange: TimeRangeKey, now = moment()) => {
+  return timeRange !== 'Today' || !afterOpening(now) ?
+    cachedSinceYesterdayClose :
+    beforeClose(now) ? cachedSinceLast15Minutes :
+      cachedSinceTodayClose
 }
 
-export const normalizeToBusinessDay = (date = moment(), checkOpening = true) => {
-  return date.isBusinessDay() && (checkOpening ? afterOpening(date) : true) ? date : date.prevBusinessDay()
+export const normalizeToBusinessDay = (date = moment()) => {
+  return date.isBusinessDay() && afterOpening(date) ? date : date.clone().prevBusinessDay()
 }
