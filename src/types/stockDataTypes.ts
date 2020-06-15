@@ -1,4 +1,4 @@
-import { StockDataKey, StatKey, StockType } from "../constants";
+import { StockDataKey, SnapshotStatKey, StockType, PeriodStatKey } from "../constants";
 
 export interface StockData {
   [StockDataKey.historicalPrices]: Price[];
@@ -6,7 +6,11 @@ export interface StockData {
 }
 
 export type SummaryStats = {
-  [key in StatKey]: number
+  [key in SnapshotStatKey]: number
+}
+
+export type PeriodStats = {
+  [key in PeriodStatKey]: number
 }
 
 export interface Ticker {

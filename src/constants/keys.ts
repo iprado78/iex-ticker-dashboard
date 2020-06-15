@@ -7,13 +7,22 @@ export enum StockDataKey {
   earnings = 'earnings'
 }
 
-export enum StatKey {
+export enum SnapshotStatKey {
   marketCap = "marketcap",
   yearEps = "ttmEPS",
   yearDPs = "ttmDividendRate",
   dividendYield = "dividendYield",
   peRatio = "peRatio",
   beta = "beta"
+}
+
+export enum PeriodStatKey {
+  high = 'high',
+  low = 'low',
+  volatility = 'volatility',
+  open = 'open',
+  close = 'close',
+  change = 'change',
 }
 
 export enum RefDataKey {
@@ -53,4 +62,14 @@ export enum StockType {
   closeEndedFund = 'cef',
   unit = 'ut',
   structuredProduct = 'struct'
-}  
+}
+
+export enum PriceKey {
+  "date" = 'date',
+  "minute" = "minute",
+  "open" = "open",
+  "close" = "close",
+  "high" = "high",
+  "low" = "low",
+  "volume" = "volume",
+}

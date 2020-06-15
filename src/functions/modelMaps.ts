@@ -68,4 +68,4 @@ const priceChartPick = ({ date, minute, volume: _v, ...rest }: Price) => ({
 
 export const pricesToChart = (prices: Price[]) => prices.map(priceChartPick)
 
-export const pricesToGrid = (prices: Price[]) => prices.map(priceGridMap).reverse()
+export const pricesToGrid = (prices: Price[]) => prices.map(priceGridMap).reverse();

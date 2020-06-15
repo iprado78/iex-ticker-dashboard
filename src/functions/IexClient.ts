@@ -7,7 +7,7 @@ import { timeRangeKeyToRangePath } from "./modelMaps";
 const API_KEY = "pk_63509e5b43384ab08845be28759fb5ea"
 const API_BASE_URL = "https://cloud.iexapis.com"
 const STOCK_PATH = '/stable/stock'
-const tickerPath = (ticker: string) => `/${STOCK_PATH}/${ticker}`
+const tickerPath = (ticker: string) => `${STOCK_PATH}/${ticker}`
 
 const tickersRefPath: PathBuilder<{}> = () => '/stable/ref-data/symbols';
 const historicalPricesPath: PathBuilder<RangePathOptions> = ({ ticker, range }) => `${tickerPath(ticker)}/chart/${range}`;

@@ -1,13 +1,12 @@
-import { SummaryStatsLabelMap, StockTypeLabelMap, Option } from "../types";
-import { StatKey } from ".";
-import { StockType } from "./keys";
+import { SummaryStatsLabelMap, StockTypeLabelMap, Option, PeriodStatsLabelMap } from "../types";
+import { StockType, PeriodStatKey, SnapshotStatKey } from "./keys";
 
 export const DEFAULT_OPTION: Option = {
   label: '',
   value: ''
 }
 
-export const statLabelMap: SummaryStatsLabelMap = {
+export const snapshotStatsLabelMap: SummaryStatsLabelMap = {
   peRatio: "P/E Ratio",
   marketcap: "Market Cap",
   dividendYield: "Div Yield",
@@ -16,7 +15,18 @@ export const statLabelMap: SummaryStatsLabelMap = {
   ttmEPS: "Earnings"
 }
 
-export const statsKeys = Object.keys(statLabelMap) as StatKey[]
+export const periodStatsLabelMap: PeriodStatsLabelMap = {
+  high: "High",
+  low: "Low",
+  volatility: "Volatility",
+  open: "Open",
+  close: "Close",
+  change: "Change %"
+}
+
+export const snapshotStatsKeys = Object.keys(snapshotStatsLabelMap) as SnapshotStatKey[];
+
+export const periodStatsKeys = Object.keys(periodStatsLabelMap) as PeriodStatKey[];
 
 export const stockTypeLabelMap: StockTypeLabelMap = {
   cs: 'Common Stock',

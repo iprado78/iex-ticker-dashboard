@@ -73,3 +73,10 @@ export const cacheValidatorFromTimeRange = (timeRange: TimeRangeKey, now = momen
 export const normalizeToBusinessDay = (date = moment()) => {
   return date.isBusinessDay() && afterOpening(date) ? date : date.clone().prevBusinessDay()
 }
+
+export const avg = (list: number[]) => {
+  if (!list.length) {
+    throw new RangeError();
+  }
+  return list.reduce((sum, num) => sum + num) / list.length;
+}
