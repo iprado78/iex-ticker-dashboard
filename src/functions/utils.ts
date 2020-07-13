@@ -64,7 +64,7 @@ export const afterOpening = (datetime = moment()) => datetime.hours() > 9 ||
 export const beforeClose = (datetime = moment()) => datetime.hours() < 16
 
 export const cacheValidatorFromTimeRange = (timeRange: TimeRangeKey, now = moment()) => {
-  return timeRange !== 'Today' || !afterOpening(now) ?
+  return timeRange !== TimeRangeKey.today || !afterOpening(now) ?
     cachedSinceYesterdayClose :
     beforeClose(now) ? cachedSinceLast15Minutes :
       cachedSinceTodayClose
@@ -76,7 +76,7 @@ export const normalizeToBusinessDay = (date = moment()) => {
 
 export const avg = (list: number[]) => {
   if (!list.length) {
-    throw new RangeError();
+    return 0;
   }
   return list.reduce((sum, num) => sum + num) / list.length;
 }

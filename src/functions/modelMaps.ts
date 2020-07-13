@@ -38,7 +38,7 @@ export function timeRangeKeyToChartLabel(timeRangeKey: TimeRangeKey) {
     [lastQuarter]: '1-Day',
     [lastYear]: '1-Day'
   }
-  return `${timeRangeKey} - ${map[timeRangeKey]} Periods`
+  return `${timeRangeKey}: ${map[timeRangeKey]} Periods`
 }
 
 export const tickersToOptions = (tickers: Ticker[]): Option[] =>

@@ -6,12 +6,15 @@ import { pricesToGrid } from "../functions";
 
 interface PriceDataGridProps {
   historicalPrices: Price[],
+  style?: any,
 }
 export function PriceDataGrid({
-  historicalPrices
+  historicalPrices,
+  style
 }: PriceDataGridProps) {
   return (
     <AgGridWrapper
+      style={style}
       suppressMenuHide
       columnDefs={colDef}
       defaultColDef={defaultColDef}

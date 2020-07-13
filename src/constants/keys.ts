@@ -19,6 +19,7 @@ export enum SnapshotStatKey {
 export enum PeriodStatKey {
   high = 'high',
   low = 'low',
+  mean = 'mean',
   volatility = 'volatility',
   open = 'open',
   close = 'close',
@@ -41,8 +42,8 @@ export enum UiStateKey {
 }
 
 export enum TimeRangeKey {
-  today = 'Today',
-  yesterday = 'Yesterday',
+  today = 'Last Day',
+  yesterday = 'Last Day -1',
   lastWeek = 'Last Week',
   lastMonth = 'Last Month',
   lastQuarter = 'Last Quarter',

@@ -18,6 +18,7 @@ export const snapshotStatsLabelMap: SummaryStatsLabelMap = {
 export const periodStatsLabelMap: PeriodStatsLabelMap = {
   high: "High",
   low: "Low",
+  mean: "Mean",
   volatility: "Volatility",
   open: "Open",
   close: "Close",

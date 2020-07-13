@@ -6,10 +6,10 @@ import { TimeRangeAction, UiStateAction } from '../types';
 
 const useStyles = makeStyles({
   root: {
-    width: '150px',
+    width: '148px',
   },
   label: {
-    fontSize: "14px"
+    fontSize: "12px"
   }
 });
 const id = "time-range-select";

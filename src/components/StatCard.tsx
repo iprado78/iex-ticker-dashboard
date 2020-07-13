@@ -9,8 +9,8 @@ export const Stat = ({ label, value }: StatProps) => {
   return (
     <Card>
       <CardContent>
-        <Typography>{label}</Typography>
-        <Typography>{value}</Typography>
+        <Typography variant="h5" align="center">{value}</Typography>
+        <Typography variant="body2" align="center">{label}</Typography>
       </CardContent>
     </Card>
   )

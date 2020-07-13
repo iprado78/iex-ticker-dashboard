@@ -11,7 +11,7 @@ export function Sidebar({ companyData }: SidebarProps) {
   const { description, companyName, exchange } = companyData[StockDataKey.company]
   const { url } = companyData[StockDataKey.logo]
   return (
-    <aside style={{ padding: 8 }} >
+    <aside>
       <Card>
         <CardHeader
           style={{ height: 150 }}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import { StockData, UiState, UiStateAction } from '../types';
 import { PriceDataGrid, SelectTimeRange, PriceDataChart } from '.';
 import { timeRangeAction } from '../functions';
@@ -17,12 +17,17 @@ export function Main({ uiState, stockData, dispatchUiState }: MainProps) {
   const { historicalPrices } = stockData
   return (
     <main>
-      <Typography align="center" color="textSecondary">Historical Value</Typography>
-      <Divider />
+      <Typography color="textSecondary" variant="h5" style={{ fontWeight: "bold" }} >Historical Stats</Typography>
       <SelectTimeRange value={timeRange} dispatch={dispatchUiState} action={timeRangeAction} />
-      <PeriodStatsGrid prices={historicalPrices} />
-      <PriceDataChart ticker={uiState.activeTicker} prices={historicalPrices} timeRange={timeRange} />
-      <PriceDataGrid historicalPrices={historicalPrices} />
+      <Grid container >
+        <Grid item xs={2}>
+          <PeriodStatsGrid prices={historicalPrices} />
+        </Grid>
+        <Grid item xs={10}>
+          <PriceDataChart ticker={uiState.activeTicker} prices={historicalPrices} timeRange={timeRange} style={{ padding: '0 0 8px 16px' }} />
+          <PriceDataGrid historicalPrices={historicalPrices} style={{ padding: '8px 0 0 16px' }} />
+        </Grid>
+      </Grid>
     </main>
   )
 }

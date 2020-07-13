@@ -22,7 +22,27 @@ const useStyles = makeStyles({
     },
   },
   root: {
-    width: 500
+    width: 500,
+    '& .MuiInput-underline:before': {
+      borderBottomColor: 'white'
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white'
+    },
+    '&:hover .MuiInput-underline:before': {
+      borderBottomColor: 'white'
+    },
+    '&:hover .MuiInput-underline:after': {
+      borderBottomColor: 'white'
+    },
+  },
+  input: {
+    color: 'white',
+  },
+  endAdornment: {
+    '& .MuiSvgIcon-root': {
+      fill: '#FFF'
+    },
   }
 });
 

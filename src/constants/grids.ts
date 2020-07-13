@@ -2,7 +2,7 @@ import { ColDef } from "ag-grid-community";
 
 export const defaultColDef: ColDef = {
   sortable: true,
-  width: 100,
+  width: 85,
   filter: 'agNumberColumnFilter',
   suppressMenu: false,
   resizable: true,
@@ -11,8 +11,8 @@ export const defaultColDef: ColDef = {
 export const colDef: ColDef[] = [
   {
     headerName: 'Date & Time',
+    width: 150,
     field: 'datetime',
-    width: 200,
     filter: false,
     type: 'dateColumn',
   },

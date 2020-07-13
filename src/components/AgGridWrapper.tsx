@@ -3,11 +3,15 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 
-export function AgGridWrapper(props: AgGridReactProps) {
+interface AgGridWrapperProps extends AgGridReactProps {
+  style?: any
+}
+
+export function AgGridWrapper({ style, ...props }: AgGridWrapperProps) {
   return (
     <div
       className="ag-theme-balham"
-      style={{ height: 400, width: '100%' }}
+      style={{ ...style, height: 400, maxWidth: '100%' }}
     >
       <AgGridReact {...props} />
     </div>

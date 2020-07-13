@@ -9,15 +9,19 @@ interface PriceDataChartProps {
   ticker: string;
   timeRange: TimeRangeKey
   prices: Price[];
+  style?: any
 }
 
-export function PriceDataChart({ prices, ticker, timeRange }: PriceDataChartProps) {
+export function PriceDataChart({ prices, ticker, timeRange, style }: PriceDataChartProps) {
   const options: Highcharts.Options = {
     title: {
       text: `${ticker} - Draw Rect to Zoom`
     },
     chart: {
       zoomType: 'xy'
+    },
+    time: {
+      useUTC: false
     },
     rangeSelector: {
       verticalAlign: 'top',
@@ -39,6 +43,8 @@ export function PriceDataChart({ prices, ticker, timeRange }: PriceDataChartProp
     } as Highcharts.SeriesCandlestickOptions]
   }
   return (
-    <HighchartsReact highcharts={Highcharts} options={options} />
+    <div style={style}>
+      <HighchartsReact highcharts={Highcharts} options={options} />
+    </div>
   );
 };
