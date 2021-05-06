@@ -15,7 +15,7 @@
     "@types/react-window": "^1.8.2",
     "ag-grid-community": "^23.2.0",
     "ag-grid-react": "^23.2.0",
-    "highcharts": "^8.1.0",
+    "highcharts": "^9.0.0",
     "highcharts-react-official": "^3.0.0",
     "moment": "^2.26.0",
     "moment-business-days": "^1.2.0",
